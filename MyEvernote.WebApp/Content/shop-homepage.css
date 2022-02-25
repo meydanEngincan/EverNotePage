@@ -22,17 +22,19 @@ body {
 }
 
 .caption {
-    height: 130px;
+    height: 155px;
     overflow: hidden;
 }
 
-.caption h4 {
-    white-space: nowrap;
-}
+    .caption h4 {
+        white-space: nowrap;
+    }
 
-.thumbnail img {
-    width: 100%;
-}
+
+
+    .thumbnail img {
+        width: 100%;
+    }
 
 .ratings {
     padding-right: 10px;
@@ -40,15 +42,28 @@ body {
     color: #d17581;
 }
 
+    .ratings button {
+        color: #d17581;
+    }
+
+        .ratings button:hover {
+            color: #00ff21;
+        }
+
 .thumbnail {
     padding: 0;
 }
 
-.thumbnail .caption-full {
-    padding: 9px;
-    color: #333;
-}
+    .thumbnail .caption-full {
+        padding: 9px;
+        color: #333;
+    }
 
 footer {
     margin: 50px 0;
+}
+
+hr {
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
