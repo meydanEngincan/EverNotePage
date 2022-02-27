@@ -5,6 +5,12 @@ VisualStudioVersion = 16.0.32002.261
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyEvernote.WebApp", "MyEvernote.WebApp\MyEvernote.WebApp.csproj", "{F9AE2395-2C81-4489-BE4D-F70EFBED1E30}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyEvernoteEntities", "MyEvernoteEntities\MyEvernoteEntities.csproj", "{3F798438-C9FA-4EDF-A5E9-49233CD3005A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyEvernoteDataAccessLayer", "MyEvernoteDataAccessLayer\MyEvernoteDataAccessLayer.csproj", "{CC445F4D-904B-4B5A-9331-585389E748F0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyEvernoteBusinessLayer", "MyEvernoteBusinessLayer\MyEvernoteBusinessLayer.csproj", "{6BCF9C46-05F9-4DED-A08D-8112F5918127}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +21,18 @@ Global
 		{F9AE2395-2C81-4489-BE4D-F70EFBED1E30}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F9AE2395-2C81-4489-BE4D-F70EFBED1E30}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F9AE2395-2C81-4489-BE4D-F70EFBED1E30}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F798438-C9FA-4EDF-A5E9-49233CD3005A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F798438-C9FA-4EDF-A5E9-49233CD3005A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F798438-C9FA-4EDF-A5E9-49233CD3005A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F798438-C9FA-4EDF-A5E9-49233CD3005A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC445F4D-904B-4B5A-9331-585389E748F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC445F4D-904B-4B5A-9331-585389E748F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC445F4D-904B-4B5A-9331-585389E748F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC445F4D-904B-4B5A-9331-585389E748F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6BCF9C46-05F9-4DED-A08D-8112F5918127}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6BCF9C46-05F9-4DED-A08D-8112F5918127}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6BCF9C46-05F9-4DED-A08D-8112F5918127}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6BCF9C46-05F9-4DED-A08D-8112F5918127}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

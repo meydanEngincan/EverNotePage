@@ -1,4 +1,5 @@
-﻿
+﻿@using MyEvernoteEntities
+@model List<Note>
 @{
     ViewBag.Title = "Index";
 }
@@ -9,13 +10,7 @@
     <div class="row">
         @*KATEGORİLER*@
         <div class="col-md-3">
-            <p class="lead">Kategoriler</p>
-            <div class="list-group">
-                <a href="#" class="list-group-item"><span class="glyphicon glyphicon-arrow-right"></span> Tümü</a>
-                <a href="#" class="list-group-item"><span class="glyphicon glyphicon-arrow-right"></span> Category 1</a>
-                <a href="#" class="list-group-item"><span class="glyphicon glyphicon-arrow-right"></span> Category 2</a>
-                <a href="#" class="list-group-item"><span class="glyphicon glyphicon-arrow-right"></span> Category 3</a>
-            </div>
+            @Html.Partial("_PartialCategories")
         </div>
 
         <div class="col-md-9">
@@ -48,12 +43,60 @@
                         </a>
                     </div>
                 </div>
-
             </div>
 
+            @*Notlar*@
             <div class="row">
-                @*YAZILAR*@
+                @foreach (Note note in Model)
+                {
+                    <div class="col-sm-4 col-lg-4 col-md-4">
+                        <div class="thumbnail">
+                            <img src="http://placehold.it/320x150" alt="@note.Title">
+                            <div class="caption">
+                                <h4>
+                                    <a href="#">
+                                        @note.Title
+                                    </a>
+                                </h4>
+                                <h6 class="text-right">
 
+                                    @note.Owner.UserName <span class="glyphicon glyphicon-user"></span><br />
+                                    @note.ModifiedOn.ToString("dd.MM.yy HH:mm") <span class="glyphicon glyphicon-time"></span>
+                                </h6>
+                                @if (string.IsNullOrEmpty(note.Text) == false && note.Text.Length > 70)
+                                {
+                                    <p> @(note.Text.Substring(0, 70) + "...")</p>
+                                    <p class="pull-right">
+                                        <a href="#" class="btn btn-default btn-sm">Devamını Oku... <span class="glyphicon glyphicon-chevron-right "></span></a>
+                                    </p>
+
+                                }
+                                else
+                                {
+                                    <p> @note.Text</p>
+                                }
+
+
+
+                            </div>
+                            <div>
+                                <hr />
+                            </div>
+                            <div class="ratings">
+                                <p class="pull-right">
+                                    <button class="btn btn-default btn-sm">
+                                        <span class="glyphicon glyphicon-comment"></span> Yorumlar
+                                    </button>
+                                </p>
+                                <p>
+                                    <button class="btn btn-default btn-sm" type="button">
+                                        <span class="glyphicon glyphicon-star-empty"></span> @note.LikeCount
+                                    </button>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                }
                 <div class="col-sm-4 col-lg-4 col-md-4">
                     <div class="thumbnail">
                         <img src="http://placehold.it/320x150" alt="">
@@ -63,196 +106,17 @@
                                     Sit amet, consectetur.
                                 </a>
                             </h4>
-                            <h6>
-
-                                <span class="glyphicon glyphicon-user"></span> engincanmeydan <br />
-                                <span class="glyphicon glyphicon-time"></span> 01.01.2022 14:16
-                            </h6>
                             <p>
                                 Sapien elit in malesuada semper mi, id sollicitudin urna fermentum.
                             </p>
+                            <h6 class="text-right">
+                                <span class="glyphicon glyphicon-user"></span> engincanmeydan <br />
+                                <span class="glyphicon glyphicon-time"></span> 01.01.2022 14:16
+                            </h6>
                         </div>
                         <div>
                             <hr />
                         </div>
-
-                        <div class="ratings">
-                            <p class="pull-right">
-                                <button class="btn btn-default btn-sm">
-                                    <span class="glyphicon glyphicon-comment"></span> Yorumlar
-                                </button>
-                            </p>
-                            <p>
-                                <button class="btn btn-default btn-sm" type="button">
-                                    <span class="glyphicon glyphicon-star-empty"></span> 15
-                                </button>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-sm-4 col-lg-4 col-md-4">
-                    <div class="thumbnail">
-                        <img src="http://placehold.it/320x150" alt="">
-                        <div class="caption">
-                            <h4>
-                                <a href="#">
-                                    Sit amet, consectetur.
-                                </a>
-                            </h4>
-                            <h6>
-
-                                <span class="glyphicon glyphicon-user"></span> engincanmeydan <br />
-                                <span class="glyphicon glyphicon-time"></span> 01.01.2022 14:16
-                            </h6>
-                            <p>
-                                Sapien elit in malesuada semper mi, id sollicitudin urna fermentum.
-                            </p>
-                        </div>
-                        <div>
-                            <hr />
-                        </div>
-
-                        <div class="ratings">
-                            <p class="pull-right">
-                                <button class="btn btn-default btn-sm">
-                                    <span class="glyphicon glyphicon-comment"></span> Yorumlar
-                                </button>
-                            </p>
-                            <p>
-                                <button class="btn btn-default btn-sm" type="button">
-                                    <span class="glyphicon glyphicon-star-empty"></span> 15
-                                </button>
-                            </p>
-                        </div>
-                    </div>
-                </div> <div class="col-sm-4 col-lg-4 col-md-4">
-                    <div class="thumbnail">
-                        <img src="http://placehold.it/320x150" alt="">
-                        <div class="caption">
-                            <h4>
-                                <a href="#">
-                                    Sit amet, consectetur.
-                                </a>
-                            </h4>
-                            <h6>
-
-                                <span class="glyphicon glyphicon-user"></span> engincanmeydan <br />
-                                <span class="glyphicon glyphicon-time"></span> 01.01.2022 14:16
-                            </h6>
-                            <p>
-                                Sapien elit in malesuada semper mi, id sollicitudin urna fermentum.
-                            </p>
-                        </div>
-                        <div>
-                            <hr />
-                        </div>
-
-                        <div class="ratings">
-                            <p class="pull-right">
-                                <button class="btn btn-default btn-sm">
-                                    <span class="glyphicon glyphicon-comment"></span> Yorumlar
-                                </button>
-                            </p>
-                            <p>
-                                <button class="btn btn-default btn-sm" type="button">
-                                    <span class="glyphicon glyphicon-star-empty"></span> 15
-                                </button>
-                            </p>
-                        </div>
-                    </div>
-                </div> <div class="col-sm-4 col-lg-4 col-md-4">
-                    <div class="thumbnail">
-                        <img src="http://placehold.it/320x150" alt="">
-                        <div class="caption">
-                            <h4>
-                                <a href="#">
-                                    Sit amet, consectetur.
-                                </a>
-                            </h4>
-                            <h6>
-
-                                <span class="glyphicon glyphicon-user"></span> engincanmeydan <br />
-                                <span class="glyphicon glyphicon-time"></span> 01.01.2022 14:16
-                            </h6>
-                            <p>
-                                Sapien elit in malesuada semper mi, id sollicitudin urna fermentum.
-                            </p>
-                        </div>
-                        <div>
-                            <hr />
-                        </div>
-
-                        <div class="ratings">
-                            <p class="pull-right">
-                                <button class="btn btn-default btn-sm">
-                                    <span class="glyphicon glyphicon-comment"></span> Yorumlar
-                                </button>
-                            </p>
-                            <p>
-                                <button class="btn btn-default btn-sm" type="button">
-                                    <span class="glyphicon glyphicon-star-empty"></span> 15
-                                </button>
-                            </p>
-                        </div>
-                    </div>
-                </div> <div class="col-sm-4 col-lg-4 col-md-4">
-                    <div class="thumbnail">
-                        <img src="http://placehold.it/320x150" alt="">
-                        <div class="caption">
-                            <h4>
-                                <a href="#">
-                                    Sit amet, consectetur.
-                                </a>
-                            </h4>
-                            <h6>
-
-                                <span class="glyphicon glyphicon-user"></span> engincanmeydan <br />
-                                <span class="glyphicon glyphicon-time"></span> 01.01.2022 14:16
-                            </h6>
-                            <p>
-                                Sapien elit in malesuada semper mi, id sollicitudin urna fermentum.
-                            </p>
-                        </div>
-                        <div>
-                            <hr />
-                        </div>
-
-                        <div class="ratings">
-                            <p class="pull-right">
-                                <button class="btn btn-default btn-sm">
-                                    <span class="glyphicon glyphicon-comment"></span> Yorumlar
-                                </button>
-                            </p>
-                            <p>
-                                <button class="btn btn-default btn-sm" type="button">
-                                    <span class="glyphicon glyphicon-star-empty"></span> 15
-                                </button>
-                            </p>
-                        </div>
-                    </div>
-                </div> <div class="col-sm-4 col-lg-4 col-md-4">
-                    <div class="thumbnail">
-                        <img src="http://placehold.it/320x150" alt="">
-                        <div class="caption">
-                            <h4>
-                                <a href="#">
-                                    Sit amet, consectetur.
-                                </a>
-                            </h4>
-                            <h6>
-
-                                <span class="glyphicon glyphicon-user"></span> engincanmeydan <br />
-                                <span class="glyphicon glyphicon-time"></span> 01.01.2022 14:16
-                            </h6>
-                            <p>
-                                Sapien elit in malesuada semper mi, id sollicitudin urna fermentum.
-                            </p>
-                        </div>
-                        <div>
-                            <hr />
-                        </div>
-
                         <div class="ratings">
                             <p class="pull-right">
                                 <button class="btn btn-default btn-sm">
