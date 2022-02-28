@@ -1,4 +1,4 @@
-﻿@using MyEvernote.WebApp.ViewModels
+﻿@using MyEvernoteEntities.ValueObjects
 @model LoginViewModel
 @{
     ViewBag.Title = "Giriş Sayfası";
@@ -16,13 +16,20 @@
                 </div>
                 <div class="main-content">
 
+                    @Html.ValidationSummary(false)
+
+                    @if (ViewBag.Setlink != null)
+                    {
+                        <a href="@ViewBag.SetLink" class="btn btn-primary">Acivate</a>
+                    }
+
                     <div class="input-group ">
                         <span class="input-group-addon"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></span>
                         @Html.TextBoxFor(model => model.UserName, new { @class = "form-control", placeholder = "Kullanı Adınız" })
                     </div>
                     <div class="input-group">
                         <span class="input-group-addon"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span></span>
-                        @Html.TextBoxFor(model => model.Password, new { @class = "form-control", placeholder = "Şifreniz", type="password" })
+                        @Html.TextBoxFor(model => model.Password, new { @class = "form-control", placeholder = "Şifreniz", type = "password" })
                     </div>
                     <div class="form-group ">
                         <button type="submit" class="btn btn-danger btn-lg btn-block login-button">Giriş</button>

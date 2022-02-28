@@ -1,4 +1,5 @@
-﻿using MyEvernoteDataAccessLayer;
+﻿using MyEvernoteCommon;
+using MyEvernoteDataAccessLayer;
 using MyEvernoteDataAccessLayer.Abstract;
 using MyEvernoteEntities;
 using System;
@@ -38,14 +39,39 @@ namespace MyEvernoteDataAccessLayer.EntityFramework
         public int Insert(T obj)
         {
             _objectSet.Add(obj);
+
+            if(obj is MyEntityBase)
+            {
+                MyEntityBase o = obj as MyEntityBase;
+                DateTime now = DateTime.Now;
+                o.CreatedOn = now;
+                o.ModifiedOn = now;
+                o.ModifiedUsername = App.Common.GetCurrentUserName();
+            }
+
             return Save();
         }
         public int Update(T obj)
         {
+            if (obj is MyEntityBase)
+            {
+                MyEntityBase o = obj as MyEntityBase;
+                o.ModifiedOn = DateTime.Now;
+                o.ModifiedUsername = App.Common.GetCurrentUserName();
+            }
+
             return Save();
         }
         public int Delete(T obj)
         {
+            //if (obj is MyEntityBase)
+            //{
+            //    MyEntityBase o = obj as MyEntityBase;
+            //    o.ModifiedOn = DateTime.Now;
+            //    o.ModifiedUsername = App.Common.GetUserName();
+
+            //}
+
             _objectSet.Remove(obj);
             return Save();
         }

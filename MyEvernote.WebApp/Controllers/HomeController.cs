@@ -1,12 +1,14 @@
-﻿using MyEvernote.WebApp.ViewModels;
+﻿using MyEvernoteEntities.ValueObjects;
 using MyEvernoteBusinessLayer;
 using MyEvernoteEntities;
+using MyEvernoteEntities.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using MyEvernoteEntities.Messages;
 
 namespace MyEvernote.WebApp.Controllers
 {
@@ -50,7 +52,6 @@ namespace MyEvernote.WebApp.Controllers
         {
             return View();
         }
-
         public ActionResult Login()
         {
             return View();
@@ -58,7 +59,26 @@ namespace MyEvernote.WebApp.Controllers
         [HttpPost]
         public ActionResult Login(LoginViewModel model)
         {
-            return View();
+            if (ModelState.IsValid)
+            {
+                EvernoteUserManager eum = new EvernoteUserManager();
+                BusinessLayerResult<EvernoteUser> res = eum.LoginUser(model);
+                if (res.Errors.Count > 0)
+                {
+                   if(res.Errors.Find(x=>x.Code==ErrorMessageCode.UserIsNotActive)!=null)
+                    {
+                        ViewBag.SetLink = "http://Home/Activate/1234-4567-78980";
+                    }                    
+                    
+                    res.Errors.ForEach(x => ModelState.AddModelError("", x.Message));
+
+
+                    return View(model);
+                }
+                Session["login"] = res.Result;
+                return RedirectToAction("Index");
+            }
+            return View(model);
         }
         public ActionResult Register()
         {
@@ -67,15 +87,74 @@ namespace MyEvernote.WebApp.Controllers
         [HttpPost]
         public ActionResult Register(RegisterViewModel model)
         {
-            return View();
+            if (ModelState.IsValid)
+            {
+                EvernoteUserManager eum = new EvernoteUserManager();
+                BusinessLayerResult<EvernoteUser> res = eum.RegisterUser(model);
+
+                if (res.Errors.Count > 0)
+                {
+                    res.Errors.ForEach(x => ModelState.AddModelError("", x.Message));
+                    return View(model);
+                }
+
+                //if (model.UserName == "aaa")
+                //{
+                //    ModelState.AddModelError("", "Kullanıcı adı kullanılıyor.");
+                //}
+
+                //if (model.EMail == "aaa@aa.com")
+                //{
+                //    ModelState.AddModelError("", "E-posta adresi kullanılıyor.");
+                //}
+
+                //foreach (var item in ModelState)
+                //{
+                //    if (item.Value.Errors.Count > 0)
+                //    {
+                //        return View(model);
+                //    }
+                //}
+                return RedirectToAction("Registerok");
+            }
+
+            return View(model);
         }
-        public ActionResult UserActivate(Guid activate_id)
+        public ActionResult RegisterOk()
         {
             return View();
+        }
+        public ActionResult UserActivate(Guid id)
+        {
+            EvernoteUserManager eum = new EvernoteUserManager();
+            BusinessLayerResult<EvernoteUser> res = eum.ActivateUser(id);
+            if (res.Errors.Count > 0)
+            {
+                TempData["errors"] = res.Errors;
+                return RedirectToAction("UserActivateCancel");
+            }
+
+            return RedirectToAction("UserActivateOk");
+        }
+        public ActionResult UserActivateOk()
+        {
+            return View();
+        }
+        public ActionResult UserActivateCancel()
+        {
+            List<ErrorMessageObj> errors = null;
+
+            if (TempData["errors"] !=null)
+            {
+                errors = TempData["errors"] as List<ErrorMessageObj>;
+            }
+            
+            return View(errors);
         }
         public ActionResult Logout()
         {
-            return View();
+            Session.Clear();
+            return RedirectToAction("Index");
         }
     }
 }

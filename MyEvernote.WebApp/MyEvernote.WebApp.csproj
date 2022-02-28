@@ -128,9 +128,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Init\WebCommon.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModels\LoginViewModel.cs" />
-    <Compile Include="ViewModels\RegisterViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -144,6 +143,9 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Home\Register.cshtml" />
+    <Content Include="Views\Home\RegisterOk.cshtml" />
+    <Content Include="Views\Home\UserActivateOk.cshtml" />
+    <Content Include="Views\Home\UserActivateCancel.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -154,12 +156,17 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+    <Folder Include="ViewModels\" />
     <Folder Include="Views\Category\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MyEvernoteBusinessLayer\MyEvernoteBusinessLayer.csproj">
       <Project>{6bcf9c46-05f9-4ded-a08d-8112f5918127}</Project>
       <Name>MyEvernoteBusinessLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MyEvernoteCommon\MyEvernoteCommon.csproj">
+      <Project>{1b431ac0-86d8-4591-a2b8-f7baa25e8ec1}</Project>
+      <Name>MyEvernoteCommon</Name>
     </ProjectReference>
     <ProjectReference Include="..\MyEvernoteEntities\MyEvernoteEntities.csproj">
       <Project>{3f798438-c9fa-4edf-a5e9-49233cd3005a}</Project>
