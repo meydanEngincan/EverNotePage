@@ -1,7 +1,6 @@
 ﻿using MyEvernoteEntities.ValueObjects;
 using MyEvernoteBusinessLayer;
 using MyEvernoteEntities;
-using MyEvernoteEntities.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -88,7 +87,40 @@ namespace MyEvernote.WebApp.Controllers
 
             return View(res.Result);
         }
+        [HttpPost]
+        public ActionResult EditProfile(EvernoteUser model,HttpPostedFileBase ProfileImage)
+        {
+            if(ProfileImage != null&&(
+                ProfileImage.ContentType=="image/jpeg"||
+                ProfileImage.ContentType=="image/jpg"||
+                ProfileImage.ContentType=="image/png"))
+            {
+                string filename = $"user_{model.Id}.{ProfileImage.ContentType.Split('/')[1]}";
+                ProfileImage.SaveAs(Server.MapPath($"~/Images/{filename}"));
+                model.ProfileImageFilename = filename;
+            }
+            EvernoteUser currentUser = Session["login"] as EvernoteUser;
+           
+            EvernoteUserManager eum = new EvernoteUserManager();
+            BusinessLayerResult<EvernoteUser> res = eum.UpdateProfile(model);
+            if (res.Errors.Count > 0)
+            {
+                ErrorViewModel errorNotifyObj = new ErrorViewModel()
+                {
+                    Title = "Profil Güncellenemedi.",
+                    Items = res.Errors,
+                    RedirectingUrl="/Home/EditProfile",
+                };
+                return View("Error", errorNotifyObj);
+            }
+            Session["login"] = res.Result;
 
+            return RedirectToAction("ShowProfile");
+        }
+        public ActionResult RemoveProfile()
+        {
+            return View();
+        }
 
         [HttpPost]
         public ActionResult RemoveProfile(EvernoteUser user)
@@ -96,10 +128,6 @@ namespace MyEvernote.WebApp.Controllers
             return View();
         }
 
-        public ActionResult RemoveProfile()
-        {
-            return View();
-        }
 
 
 

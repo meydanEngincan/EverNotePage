@@ -114,5 +114,39 @@ namespace MyEvernoteBusinessLayer
             }
             return res;
         }
+
+        public BusinessLayerResult<EvernoteUser> UpdateProfile(EvernoteUser data)
+        {
+            EvernoteUser db_user = repo_user.Find(x => x.Id != data.Id && (x.UserName == data.UserName || x.Email == data.Email));
+            BusinessLayerResult<EvernoteUser> res = new BusinessLayerResult<EvernoteUser>();
+            if(db_user!=null&&db_user.Id!=data.Id)
+            {
+                if(db_user.UserName==data.UserName)
+                {
+                    res.AddError(ErrorMessageCode.UserNameAlreadyExists, "Kullanıcı adı kayıtlı.");
+                }
+                if (db_user.Email == data.Email)
+                {
+                    res.AddError(ErrorMessageCode.EmailAlreadyExists, "E-posta adresi kayıtlı.");
+                }
+                return res;
+            }
+            res.Result = repo_user.Find(x => x.Id == data.Id);
+            res.Result.Email = data.Email;
+            res.Result.Name = data.Name;
+            res.Result.Surname = data.Surname;
+            res.Result.Password = data.Password;
+            res.Result.UserName = data.UserName;
+            //res.Result.ActivateGuid = Guid.Empty;
+            if (string.IsNullOrEmpty(data.ProfileImageFilename) == false)
+            {
+                res.Result.ProfileImageFilename = data.ProfileImageFilename;
+            }
+            if (repo_user.Update(res.Result) == 0)
+            {
+                res.AddError(ErrorMessageCode.ProfileCouldnNotUpdated, "Profil güncellenemedi.");
+            }
+            return res;
+        }
     }
 }
